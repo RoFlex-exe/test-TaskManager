@@ -49,7 +49,7 @@ public class Main {
                     break;
                 case 4:
                     List<Task> tasks = taskManager.getTasks();
-                    System.out.printf("%-5s | %-40s | %-10s | %-20s%n", "Номер", "Задача", "Выполнение", "Пользователь");
+                    System.out.printf("%-5s | %-40s | %-10s | %-20s%n", "Номер", "Задача", "Статус задачи", "Пользователь");
                     System.out.println("---------------------------------------------------------------");
                     for (Task task : tasks) {
                         System.out.println(task);

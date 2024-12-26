@@ -74,21 +74,23 @@ public class TaskManager {
 
     public List<Task> getTasks() {
         List<Task> tasks = new ArrayList<>();
-        String sql = "SELECT * FROM tasks";
+        String sql = "SELECT tasks.id, tasks.description, tasks.completed, users.name " +
+                "FROM tasks JOIN users ON tasks.userId = users.id";
         try (Statement stmt = connection.createStatement();
              ResultSet rs = stmt.executeQuery(sql)) {
             while (rs.next()) {
                 int id = rs.getInt("id");
                 String description = rs.getString("description");
                 boolean completed = rs.getBoolean("completed");
-                int userId = rs.getInt("userId");
-                tasks.add(new Task(id, description, completed, userId));
+                String userName = rs.getString("name"); // Получение имени пользователя
+                tasks.add(new Task(id, description, completed, userName)); // Передаем имя пользователя в Task
             }
         } catch (SQLException e) {
             System.out.println("Ошибка при получении задач: " + e.getMessage());
         }
         return tasks;
     }
+
 
     public boolean userExists(int userId) {
         String sql = "SELECT COUNT(*) FROM users WHERE id = ?";
@@ -186,7 +188,7 @@ public class TaskManager {
         String sql = "INSERT INTO tasks (description, completed, userId) VALUES (?, ?, ?)";
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(filePath), StandardCharsets.UTF_8))) {
             String line;
-            reader.readLine();
+            reader.readLine(); // Пропустить заголовок
             while ((line = reader.readLine()) != null) {
                 String[] parts = line.split(",");
                 if (parts.length == 4) {
