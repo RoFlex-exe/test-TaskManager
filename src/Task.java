@@ -14,7 +14,7 @@ public class Task {
 
     @Override
     public String toString() {
-        return String.format("%-5d | %-40s | %-10s | %-20s", id, description, completed ? "Выполнено" : "Не выполнено", userName); // Выводим имя пользователя
+        return String.format("%-5d | %-40s | %-10s | %-20s", id, description, completed ? "Выполнено" : "Не выполнено", userName);
     }
 
     public int getId() {
